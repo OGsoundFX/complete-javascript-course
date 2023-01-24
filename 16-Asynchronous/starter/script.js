@@ -24,6 +24,57 @@ GOOD LUCK 😀
 
 const images = ['img/img-1.jpg', 'img/img-2.jpg', 'img/img-3.jpg']
 
-const loadAll = () => {
+// images.forEach(img => document.querySelector("body").insertAdjacentHTML(
+//   "beforeend",
+//   `<img style="height: 400px; margin: 0 20px" src="${img}">`
+// ))
 
+// const createImage = function (imgPath) {
+//   return new Promise(function (resolve, reject) {
+//     const img = document.createElement('img');
+//     img.src = imgPath;
+
+//     img.addEventListener('load', function () {
+//       imgContainer.append(img);
+//       resolve(img);
+//     });
+
+//     img.addEventListener('error', function () {
+//       reject(new Error('Image not found'));
+//     });
+//   });
+// };
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+const createImage = (path) => {
+  const img = document.createElement('img')
+  img.src = path
+  img.addEventListener('load', () => {
+    document.querySelector("main").append(img)
+  })
+  return img
 }
+
+const loadNPause = async () => {
+  try {
+    // for (const image of images) {
+    //   const img = await createImage(image)
+    //   await wait(2)
+    //   console.log(img)
+    //   img.style = "display: none"
+    // }
+    images.forEach(async image => {
+      await wait(2)
+      await createImage(image)
+    })
+  } catch(err) {
+    console.error(err)
+  }
+}
+
+loadNPause()
